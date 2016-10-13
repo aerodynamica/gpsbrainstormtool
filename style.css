@@ -8,4 +8,7 @@ and open the template in the editor.
     Author     : maxim
 */
 
-
+.single-item{
+    margin-left: 25px;
+    margin-right: 25px;
+}
