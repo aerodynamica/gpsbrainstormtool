@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Copyright (C) 2016 maxim
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html>
     <head>
@@ -25,7 +36,24 @@ and open the template in the editor.
                 <input ng-model="$storage.question" placeholder="Vul hier de vraag in...">
             </div>
             <div>
-                <h1>Ideeën</h1>
+                <div class="ideas" id="redIdeas">
+                    <h2>RODE IDEEËN</h2>
+                    <h3>korte termijn: snel realiseerbaar</h3>
+                    <ul>
+                        <li ng-repeat="idea in $storage.ideas.red | orderBy:'c':true">
+                          {{ idea.q + '(' + idea.c + ')'}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="ideas" id="yellowIdeas">
+                    <h2>GELE IDEEËN</h2>
+                    <h3>lange termijn: haalbaarheid moet onderzocht worden</h3>
+                    <ul>
+                        <li ng-repeat="idea in $storage.ideas.yellow | orderBy:'c':true">
+                          {{ idea.q + '(' + idea.c + ')'}}
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div>
                                 <h1>Einde</h1>
@@ -43,17 +71,17 @@ and open the template in the editor.
                     });
         });
         $("body").keydown(function(e){
-    // left arrow
-    if ((e.keyCode || e.which) === 37)
-    {   
-        $('.single-item').slick('slickPrev');
-    }
-    // right arrow
-    if ((e.keyCode || e.which) === 39)
-    {
-        $('.single-item').slick('slickNext');  
-    }   
-});
+            // left arrow
+            if ((e.keyCode || e.which) === 37)
+            {   
+                $('.single-item').slick('slickPrev');
+            }
+            // right arrow
+            if ((e.keyCode || e.which) === 39)
+            {
+                $('.single-item').slick('slickNext');  
+            }   
+        });
         </script>
         
         <script type="text/javascript">
@@ -61,7 +89,8 @@ and open the template in the editor.
 
             app.controller('ctrl', function($scope,$localStorage) {
                 $scope.$storage = $localStorage.$default({
-                    question: ""
+                    "question": "",
+                    "ideas": JSON.parse('{"yellow":[{"q":"geelidee1","c":"3"},{"q":"geelidee2","c":"2"},{"q":"geelidee3","c":"4"}],"red":[]}')
                 });
             });
             
