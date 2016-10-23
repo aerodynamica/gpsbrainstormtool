@@ -40,11 +40,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <h2>RODE IDEEËN</h2>
                     <h3>korte termijn: snel realiseerbaar</h3>
                     <idea-list type="red"></idea-list>
+                    <idea-input type="red"></idea-input>
                 </div>
                 <div class="ideas" id="yellowIdeas">
                     <h2>GELE IDEEËN</h2>
                     <h3>lange termijn: haalbaarheid moet onderzocht worden</h3>
                     <idea-list type="yellow"></idea-list>
+                    <idea-input type="yellow"></idea-input>
                 </div>
             </div>
             <div>
@@ -57,8 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         
         <script type="text/javascript">
           $(document).ready(function(){
-            var initialSlide = localStorage.slide;
-            console.log(initialSlide);
+            var initialSlide = localStorage.slide || 0;
             $('.single-item').slick({
                 dots: true,
                 infinite: false,
@@ -70,17 +71,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           localStorage.slide = currentSlide;
         });
         $("body").keydown(function(e){
-            // left arrow
-            if ((e.keyCode || e.which) === 37)
-            {   
-                $('.single-item').slick('slickPrev');
-            }
-            // right arrow
-            if ((e.keyCode || e.which) === 39)
-            {
-                $('.single-item').slick('slickNext');  
-            }   
-        });
+            switch(e.which) {
+        case 37: // left
+            $('.single-item').slick('slickPrev');
+        break;
+        
+        case 39: // right
+            $('.single-item').slick('slickNext'); 
+        break;
+        
+        default: return; 
+    }
+    e.preventDefault();
+});            
         </script>
         
         <script type="text/javascript">
@@ -89,8 +92,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app.controller('ctrl', function($scope,$localStorage) {
                 $scope.$storage = $localStorage.$default({
                     "question": "",
-                    "ideas": JSON.parse('{"yellow":[{"q":"geelidee1","c":"3"},{"q":"geelidee2","c":"2"},{"q":"geelidee3","c":"4"}],"red":[]}')
+                    "ideas": new Array(),
+                    "yellow": "",
+                    "red": ""
                 });
+                $scope.addIdea = function(color) {
+                    var ideastring = $scope.$storage[color];
+                    if(!!ideastring){
+                    var idea = JSON.parse('{"q":"'+ideastring+'","t":"'+color+'","c":"0"}');
+                    $scope.$storage.ideas.push(idea);
+                    }
+                    $scope.$storage[color] = "";
+                };
+                $scope.removeIdea = function(idea) {
+                    var index = $scope.$storage.ideas.indexOf(idea);
+                    console.log(index);
+                    $scope.$storage.ideas.splice(index, 1);
+                }
+                
             });
             
             app.directive('question', function() {
@@ -103,10 +122,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 return {
                     template: function(tElem, tAttrs){
                         return '<ul>'+
-                        '<li ng-repeat="idea in $storage.ideas.'+tAttrs.type+' | orderBy:\'c\':true">'+
+                        '<li ng-repeat="idea in $storage.ideas | filter: {t: \''+tAttrs.type+'\'} | orderBy:\'c\':true">'+
                           '{{ idea.q + \'(\' + idea.c + \')\'}}'+
+                          '<a ng-click="removeIdea(idea)">Delete</a>'+
                         '</li>'+
+                        
                     '</ul>';
+                    }
+                };
+            });
+            
+            app.directive('ideaInput', function(){
+                return {
+                    template: function(tElem, tAttrs){
+                        return '<form ng-controller="ctrl" ng-submit="addIdea(\''+tAttrs.type+'\')">'+
+                                '<input type="text" ng-model="$storage.'+tAttrs.type+'" >'+
+                                '<input type="submit" value="Voeg toe"/>'+
+                                '</form>';
                     }
                 };
             });
