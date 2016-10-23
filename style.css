@@ -19,13 +19,49 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Author     : maxim
 */
 
+html, body
+{
+    
+
+}
+
 .single-item{
     margin-left: 25px;
     margin-right: 25px;
     font-family: Arial, Helvetica, sans-serif;
+    /* background-color: rgba(0,0,0,0.02);*/
+    height:90vh;
+}
+
+question h1{
+    text-align: center;
 }
 
 .ideas{
-    width:50%;
+    width:45%;
+    padding:2%;
     float:left;
+    height:80vh;
+}
+
+#yellowIdeas{
+  border-left-style: dashed;
+  border-left-width: 1px;
+
+}
+
+#yellowIdeas h2{
+    background-color: #ffff66;
+}
+
+#redIdeas h2{
+    background-color: red;
+}
+
+input[type=text]:not(:focus){
+    opacity: 0.3;
+}
+
+input[type=text]:not(:focus) + input[type=submit]{
+    opacity:0.3;
 }
