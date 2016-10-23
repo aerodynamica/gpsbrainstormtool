@@ -62,6 +62,6 @@ input[type=text]:not(:focus){
     opacity: 0.3;
 }
 
-input[type=text]:not(:focus) + input[type=submit]{
+input[type=text]:not(:focus) + i{
     opacity:0.3;
 }
