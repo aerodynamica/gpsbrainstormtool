@@ -97,9 +97,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     "red": ""
                 });
                 $scope.addIdea = function(color) {
-                    var ideastring = $scope.$storage[color];
+                    var ideastring = $scope.$storage[color].toString();
                     if(!!ideastring){
-                    var idea = JSON.parse('{"q":"'+ideastring+'","t":"'+color+'","c":"0"}');
+                    var idea = new Object();
+                    idea["q"] = ideastring;
+                    idea["t"] = color;
+                    idea["c"] = 0;
                     $scope.$storage.ideas.push(idea);
                     }
                     $scope.$storage[color] = "";
@@ -108,6 +111,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     var index = $scope.$storage.ideas.indexOf(idea);
                     console.log(index);
                     $scope.$storage.ideas.splice(index, 1);
+                };
+                
+                $scope.upvoteIdea = function(idea) {
+                    idea["c"] = idea["c"] + 1;
+                }
+                
+                 $scope.downvoteIdea = function(idea) {
+                    if(idea["c"]>0) idea["c"] = idea["c"] - 1;
                 }
                 
             });
@@ -122,11 +133,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 return {
                     template: function(tElem, tAttrs){
                         return '<ul>'+
-                        '<li ng-repeat="idea in $storage.ideas | filter: {t: \''+tAttrs.type+'\'} | orderBy:\'c\':true">'+
-                          '{{ idea.q + \'(\' + idea.c + \')\'}}'+
-                          '<a ng-click="removeIdea(idea)">Delete</a>'+
-                        '</li>'+
-                        
+                        '<li ng-repeat="idea in $storage.ideas | filter: {t: \''+tAttrs.type+'\'}">'+
+                          '{{ idea.q + \' (\' + idea.c + \')\'}}'+
+                          ' <a ng-click="removeIdea(idea)">Delete</a>'+
+                          ' <a ng-click="upvoteIdea(idea)">Upvote</a>'+
+                          ' <a ng-click="downvoteIdea(idea)">Downvote</a>'+
+                        '</li>'+                        
                     '</ul>';
                     }
                 };
