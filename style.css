@@ -19,26 +19,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Author     : maxim
 */
 
-html, body
-{
-    
-
-}
-
 .single-item{
     margin-left: 25px;
     margin-right: 25px;
     font-family: Arial, Helvetica, sans-serif;
-    /* background-color: rgba(0,0,0,0.02);*/
     height:90vh;
 }
 
 question h1{
     text-align: center;
+    font-size: 700%;
+    padding: 5%;
 }
 
 .ideas{
-    width:45%;
+    width:49%;
     padding:2%;
     float:left;
     height:80vh;
@@ -59,9 +54,25 @@ question h1{
 }
 
 input[type=text]:not(:focus){
-    opacity: 0.3;
+    opacity: 0.2;
 }
 
-input[type=text]:not(:focus) + i{
-    opacity:0.3;
+input[type=text]:not(:focus) + button{
+    opacity:0.1;
+}
+
+li span {
+    -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+li > i {
+    opacity: 0.1;    
+}
+
+li > i:hover {
+    opacity: 1;
 }
