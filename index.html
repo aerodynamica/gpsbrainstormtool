@@ -30,6 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+        <script src="angular-drag-and-drop-lists.min.js"></script>
         
     </head>
     <body>
@@ -92,12 +93,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </script>
         
         <script type="text/javascript">
-            var app = angular.module('app', ['ngStorage']);
+            var app = angular.module('app', ['ngStorage','dndLists']);
 
             app.controller('ctrl', function($scope,$localStorage) {
                 $scope.$storage = $localStorage.$default({
                     "question": "",
-                    "ideas": new Array(),
+                    "ideas": JSON.parse('{"red":[], "yellow":[]}'),
                     "yellow": "",
                     "red": ""
                 });
@@ -106,16 +107,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     if(!!ideastring){
                     var idea = new Object();
                     idea["q"] = ideastring;
-                    idea["t"] = color;
                     idea["c"] = 0;
-                    $scope.$storage.ideas.push(idea);
+                    $scope.$storage.ideas[color].push(idea);
                     }
                     $scope.$storage[color] = "";
                 };
-                $scope.removeIdea = function(idea) {
-                    var index = $scope.$storage.ideas.indexOf(idea);
-                    console.log(index);
-                    $scope.$storage.ideas.splice(index, 1);
+                $scope.removeIdea = function(color,idea) {
+                    var index = $scope.$storage.ideas[color].indexOf(idea);
+                    $scope.$storage.ideas[color].splice(index, 1);
                 };
                 
                 $scope.upvoteIdea = function(idea) {
@@ -137,11 +136,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app.directive('ideaList', function(){
                 return {
                     template: function(tElem, tAttrs){
-                        return '<ul class="list-group">'+
-                        '<li class="list-group-item" ng-repeat="idea in $storage.ideas | filter: {t: \''+tAttrs.type+'\'}">'+
+                        return '<ul class="list-group" dnd-list="$storage.ideas.'+tAttrs.type+'">'+
+                        '<li class="list-group-item" ng-repeat="idea in $storage.ideas.'+tAttrs.type+'"'+
+                        ' dnd-draggable="idea"'+
+                        ' dnd-moved="$storage.ideas.'+tAttrs.type+'.splice($index, 1)"'+
+                        ' dnd-effect-allowed="move"'+
+                        
+                          '>'+
                           '<span>{{ idea.q }}</span>'+
                           ' <span class="badge">{{idea.c}}</span>'+
-                          ' <i class="fa fa-times" ng-click="removeIdea(idea)" title="Verwijderen"></i>'+
+                          ' <i class="fa fa-times" ng-click="removeIdea(\''+tAttrs.type+'\',idea)" title="Verwijderen"></i>'+
                           ' <i class="fa fa-chevron-up" ng-click="upvoteIdea(idea)" title="Stem +1"></i>'+
                           ' <i  class="fa fa-chevron-down" ng-click="downvoteIdea(idea)" title="Stem -1"></i>'+
                         '</li>'+                        
