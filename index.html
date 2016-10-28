@@ -39,6 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div>              
                 <question></question>
                 <input type="text" ng-model="$storage.question" placeholder="Vul hier de vraag in...">
+                <restore></restore>
             </div>
             <div>
                 <div class="ideas" id="redIdeas">
@@ -96,12 +97,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             var app = angular.module('app', ['ngStorage','dndLists']);
 
             app.controller('ctrl', function($scope,$localStorage) {
-                $scope.$storage = $localStorage.$default({
-                    "question": "",
-                    "ideas": JSON.parse('{"red":[], "yellow":[]}'),
-                    "yellow": "",
-                    "red": ""
-                });
+                var defaultStorage = new Object();
+                defaultStorage["question"] = "";
+                defaultStorage["ideas"] = JSON.parse('{"red":[], "yellow":[]}');
+                defaultStorage["yellow"] = "";
+                defaultStorage["red"] = "";
+                
+                $scope.$storage = $localStorage.$default(defaultStorage);
                 $scope.addIdea = function(color) {
                     var ideastring = $scope.$storage[color].toString();
                     if(!!ideastring){
@@ -119,11 +121,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 
                 $scope.upvoteIdea = function(idea) {
                     idea["c"] = idea["c"] + 1;
-                }
+                };
                 
                  $scope.downvoteIdea = function(idea) {
                     if(idea["c"]>0) idea["c"] = idea["c"] - 1;
-                }
+                };
+                
+                $scope.restore = function(){
+                    $scope.$storage = $scope.$storage.$reset(defaultStorage);
+                };
                 
             });
             
@@ -164,6 +170,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 '</button>'+
                                 '</form>';
                     }
+                };
+            });
+            
+            app.directive('restore',function(){
+                return {
+                    template: '<button ng-click="restore()">Herstel</button>'
                 };
             });
             
