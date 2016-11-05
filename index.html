@@ -55,8 +55,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <idea-input type="yellow"></idea-input>
                 </div>
             </div>
-            <div>                
-                <h1>Einde</h1>
+            <div>    
+                <h2>Finale ranking</h2>
+                <sorted-idea-list></sorted-idea-list>
             </div>
         </div>
         
@@ -108,8 +109,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     var ideastring = $scope.$storage[color].toString();
                     if(!!ideastring){
                     var idea = new Object();
-                    idea["q"] = ideastring;
-                    idea["c"] = 0;
+                    idea["text"] = ideastring;
+                    idea["count"] = 0;
                     $scope.$storage.ideas[color].push(idea);
                     }
                     $scope.$storage[color] = "";
@@ -120,11 +121,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 };
                 
                 $scope.upvoteIdea = function(idea) {
-                    idea["c"] = idea["c"] + 1;
+                    idea["count"] = idea["count"] + 1;
                 };
                 
                  $scope.downvoteIdea = function(idea) {
-                    if(idea["c"]>0) idea["c"] = idea["c"] - 1;
+                    if(idea["count"]>0) idea["count"] = idea["count"] - 1;
                 };
                 
                 $scope.restore = function(){
@@ -149,8 +150,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         ' dnd-effect-allowed="move"'+
                         
                           '>'+
-                          '<span>{{ idea.q }}</span>'+
-                          ' <span class="badge">{{idea.c}}</span>'+
+                          '<span>{{ idea.text }}</span>'+
+                          ' <span class="badge">{{idea.count}}</span>'+
                           ' <i class="fa fa-times" ng-click="removeIdea(\''+tAttrs.type+'\',idea)" title="Verwijderen"></i>'+
                           ' <i class="fa fa-chevron-up" ng-click="upvoteIdea(idea)" title="Stem +1"></i>'+
                           ' <i  class="fa fa-chevron-down" ng-click="downvoteIdea(idea)" title="Stem -1"></i>'+
@@ -172,6 +173,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     }
                 };
             });
+            
+            app.directive('sortedIdeaList', function(){
+                return {
+                    template: function(tElem, tAttrs){
+                        return '<ol class="list-group">'+
+                        '<li class="list-group-item" ng-repeat="idea in $storage.ideas.yellow.concat($storage.ideas.red) | orderBy:\'count\':true">'+
+                          '<span>{{ idea.text }}</span>'+
+                          ' <span class="badge">{{idea.count}}</span>'+
+                        '</li>'+                        
+                    '</ol>';
+                    }
+                };
+            });
+            
+            
             
             app.directive('restore',function(){
                 return {

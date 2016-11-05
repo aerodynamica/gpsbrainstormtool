@@ -159,3 +159,13 @@ ul[dnd-list] li.selected {
     background-color: #dff0d8;
     color: #3c763d;
 }
+
+
+
+ol.list-group {
+    list-style: decimal inside;
+}
+
+ol > li.list-group-item {
+    display: list-item;
+}
