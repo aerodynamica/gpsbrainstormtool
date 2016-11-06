@@ -19,6 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Author     : maxim
 */
 
+@font-face {
+    font-family: LemonMilk;
+    src: url(LemonMilk.otf);
+}
+
 .single-item{
     margin-left: 25px;
     margin-right: 25px;
@@ -26,6 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 question h1{
+    font-family: LemonMilk, Arial, Helvetica,sans-serif;
     text-align: center;
     font-size: 700%;
     padding: 5%;
@@ -50,30 +56,58 @@ question h1{
 
 }
 
-#yellowIdeas h2{    
+.title{
+    font-family: LemonMilk, Arial, Helvetica,sans-serif;
+    font-weight: bold;
     color: black;
-   -webkit-text-fill-color: yellow; /* Will override color (regardless of order) */
    -webkit-text-stroke-width: 1px;
-   -webkit-text-stroke-color: black;
+   -webkit-text-stroke-color: rgba(0,0,0,0.7);
 }
 
-#redIdeas h2{
-    color: black;
+#yellowIdeas h1{
+   -webkit-text-fill-color: yellow; /* Will override color (regardless of order) */
+}
+
+#redIdeas h1{
    -webkit-text-fill-color: red; /* Will override color (regardless of order) */
-   -webkit-text-stroke-width: 1px;
-   -webkit-text-stroke-color: black;
 }
 
 input[type=text]:not(:focus){
     opacity: 0.2;
 }
 
-input[type=text]:not(:focus) + button{
+input[type=text]:not(:focus) + span>button{
     opacity:0.1;
 }
 
+*.subtle{
+    opacity:0.1;
+}
+
+*.subtle:hover{
+    opacity:1;
+}
+
+.fa-times{
+    margin-left: 1%;
+    color: red;
+}
+
+.fa-chevron-up {
+    float: left;
+    margin-right: 1%;
+}
+.fa-chevron-down{
+    float: left;
+    margin-right: 1%;
+}
+
+.badge-info {
+  background-color: #3a87ad!important;
+}
+
 ul{
-    max-height: 90%;
+    max-height: 80%;
     overflow: auto;
 }
 
@@ -84,15 +118,6 @@ li span {
   -ms-user-select: text;
   user-select: text;
 }
-
-li > i {
-    opacity: 0.1;    
-}
-
-li > i:hover {
-    opacity: 1;
-}
-
 
 /* Drag and drop */
 
@@ -162,10 +187,42 @@ ul[dnd-list] li.selected {
 
 
 
-ol.list-group {
-    list-style: decimal inside;
+/* Finale ranking */
+
+#finalRanking h1{
+    text-transform: uppercase;
+    -webkit-text-fill-color: rgb(18, 179, 72); /* Will override color (regardless of order) */
+    
 }
 
-ol > li.list-group-item {
-    display: list-item;
+.medal {
+  max-height: 90%;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.medal li {
+  counter-increment: step-counter;
+}
+.medal li::before {
+  content: counter(step-counter);
+  margin-right: 20px;
+  color: black;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+
+.medal li:nth-child(1)::before {
+  background-color: gold; 
+}
+
+.medal li:nth-child(2)::before {
+  background-color: silver; 
+}
+
+.medal li:nth-child(3)::before {
+  background-color: #cd7f32; 
 }

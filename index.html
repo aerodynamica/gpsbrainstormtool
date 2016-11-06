@@ -33,32 +33,53 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <script src="angular-drag-and-drop-lists.min.js"></script>
         
     </head>
-    <body>
+    <body ng-app="app" ng-controller="ctrl">
         
-        <div class="single-item" ng-app="app" ng-controller="ctrl">
+        <div class="single-item" >
             <div>              
                 <question></question>
-                <input id="textinput" type="text" ng-model="$storage.question" placeholder="Vul hier de vraag in...">
-                <restore></restore>
+                <input id="textinput" class="form-control" type="text" ng-model="$storage.question" placeholder="Vul hier de vraag in...">       
             </div>
             <div>
                 <div class="ideas" id="redIdeas">
-                    <h2>RODE IDEEËN</h2>
+                    <h1 class="title">RODE IDEEËN</h1>
                     <h3>korte termijn <small>snel realiseerbaar</small></h3>
                     <idea-list type="red"></idea-list>
                     <idea-input type="red"></idea-input>
                 </div>
                 <div class="ideas" id="yellowIdeas">
-                    <h2>GELE IDEEËN</h2>
+                    <h1 class="title">GELE IDEEËN</h1>
                     <h3>lange termijn <small>haalbaarheid moet onderzocht worden</small></h3>
                     <idea-list type="yellow"></idea-list>
                     <idea-input type="yellow"></idea-input>
                 </div>
             </div>
-            <div>    
-                <h2>Finale ranking</h2>
+            <div id="finalRanking">    
+                <h1 class="title">Finale Ranking</h1>
                 <sorted-idea-list></sorted-idea-list>
+                <button type="button" class="btn btn-danger btn-lg subtle" data-toggle="modal" data-target="#myModal">
+                  Verwijder alle data
+                </button>
             </div>
+        </div>
+        
+        <!-- Verwijder alle data modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Sluiten"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Data verwijderen</h4>
+              </div>
+              <div class="modal-body">
+                Bent u zeker dat u alle data wil verwijderen?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
+                 <restore></restore>
+              </div>
+            </div>
+          </div>
         </div>
         
         
@@ -151,10 +172,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         
                           '>'+
                           '<span>{{ idea.text }}</span>'+
-                          ' <span class="badge">{{idea.count}}</span>'+
-                          ' <i class="fa fa-times" ng-click="removeIdea(\''+tAttrs.type+'\',idea)" title="Verwijderen"></i>'+
-                          ' <i class="fa fa-chevron-up" ng-click="upvoteIdea(idea)" title="Stem +1"></i>'+
-                          ' <i  class="fa fa-chevron-down" ng-click="downvoteIdea(idea)" title="Stem -1"></i>'+
+                          ' <span class="badge badge-info">{{idea.count}}</span>'+
+                          ' <i class="fa fa-times subtle" ng-click="removeIdea(\''+tAttrs.type+'\',idea)" title="Verwijderen"></i>'+
+                          ' <i class="fa fa-chevron-up subtle" ng-click="upvoteIdea(idea)" title="Stem +1"></i>'+
+                          ' <i  class="fa fa-chevron-down subtle" ng-click="downvoteIdea(idea)" title="Stem -1"></i>'+
                         '</li>'+                        
                     '</ul>';
                     }
@@ -165,10 +186,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 return {
                     template: function(tElem, tAttrs){
                         return '<form ng-controller="ctrl" ng-submit="addIdea(\''+tAttrs.type+'\')">'+
-                                '<input type="text" ng-model="$storage.'+tAttrs.type+'" >'+
+                                '<div class="input-group">'+                
+                                '<input type="text" class="form-control" ng-model="$storage.'+tAttrs.type+'" placeholder="Vul hier een nieuw idee in...">'+
+                                '<span class="input-group-btn">'+
                                 '<button type="submit" class="btn btn-success">'+
                                 '<i class="fa fa-plus-circle" title="Toevoegen"></i>'+
                                 '</button>'+
+                                '</span>'+
+                                '</div>'+
                                 '</form>';
                     }
                 };
@@ -177,10 +202,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app.directive('sortedIdeaList', function(){
                 return {
                     template: function(tElem, tAttrs){
-                        return '<ol class="list-group">'+
+                        return '<ol class="list-group medal">'+
                         '<li class="list-group-item" ng-repeat="idea in $storage.ideas.yellow.concat($storage.ideas.red) | orderBy:\'count\':true">'+
                           '<span>{{ idea.text }}</span>'+
-                          ' <span class="badge">{{idea.count}}</span>'+
+                          ' <span class="badge badge-info">{{idea.count}}</span>'+
                         '</li>'+                        
                     '</ol>';
                     }
@@ -191,7 +216,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             
             app.directive('restore',function(){
                 return {
-                    template: '<button ng-click="restore()">Herstel</button>'
+                    template: '<button ng-click="restore()" type="button" class="btn btn-danger">Verwijder alle data</button>'
                 };
             });
             
