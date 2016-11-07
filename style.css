@@ -91,8 +91,16 @@ input[type=text]:not(:focus){
     opacity: 0.2;
 }
 
-input[type=text]:not(:focus) + span>button{
+input[type=text]:not(:focus) + span + span>button{
     opacity:0.1;
+}
+
+input[type=text]:not(:focus) + span{
+    opacity:0.1;
+}
+
+.errorMsg{
+    color: #a94442!important;
 }
 
 *.subtle{
