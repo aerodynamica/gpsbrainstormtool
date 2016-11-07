@@ -24,16 +24,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     src: url(LemonMilk.otf);
 }
 
+body{
+    background: rgba(46,30,28,0.1);
+background: -moz-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0) 50%, rgba(0,0,0,0.1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(46,30,28,0.1)), color-stop(50%, rgba(23,15,14,0)), color-stop(100%, rgba(0,0,0,0.1)));
+background: -webkit-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0) 50%, rgba(0,0,0,0.1) 100%);
+background: -o-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0) 50%, rgba(0,0,0,0.1) 100%);
+background: -ms-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0) 50%, rgba(0,0,0,0.1) 100%);
+background: linear-gradient(to right, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0) 50%, rgba(0,0,0,0.1) 100%)!important;
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2e1e1c', endColorstr='#000000', GradientType=1 );
+}
+
+.slick-slide{
+    height: 90vh;
+}
+
 .single-item{
-    margin-left: 25px;
-    margin-right: 25px;
+    margin-left: 50px;
+    margin-right: 50px;
     height:90vh;
 }
 
 question h1{
     font-family: LemonMilk, Arial, Helvetica,sans-serif;
     text-align: center;
-    font-size: 700%;
+    font-size: 600%;
     padding: 5%;
     vertical-align: middle;
     
@@ -44,10 +59,10 @@ question h1{
 }
 
 .ideas{
-    width:49%;
+    width:50%;
     padding:2%;
     float:left;
-    height:80vh;
+    height:90vh;
 }
 
 #yellowIdeas{
@@ -196,7 +211,7 @@ ul[dnd-list] li.selected {
 }
 
 .medal {
-  max-height: 90%;
+  max-height: 80%;
   overflow: auto;
   margin: 0;
   padding: 0;
