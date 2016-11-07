@@ -5,4 +5,4 @@ This web application allows you to replace the flipchart part of the method.
 
 More information about the GPS brainstorm kit can be found on [the Flanders DC website](http://www.flandersdc.be/nl/gps).
 
-[Demo](https://www.maximvlieghe.be/gpsbrainstorm/)
+[Demo](https://aerodynamica.github.io/gpsbrainstormtool/)
