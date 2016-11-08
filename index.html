@@ -126,13 +126,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               });
 
             app.controller('ctrl', function($scope,$localStorage) {
-                var defaultStorage = new Object();
-                defaultStorage["question"] = "";
-                defaultStorage["ideas"] = JSON.parse('{"red":[], "yellow":[]}');
-                defaultStorage["yellow"] = "";
-                defaultStorage["red"] = "";
+                $scope.getDefault = function(){
+                    var defaultStorage = new Object();
+                    defaultStorage["question"] = "";
+                    defaultStorage["ideas"] = JSON.parse('{"red":[], "yellow":[]}');
+                    defaultStorage["yellow"] = "";
+                    defaultStorage["red"] = "";
+                    return defaultStorage;
+                }
                 
-                $scope.$storage = $localStorage.$default(defaultStorage);
+                $scope.$storage = $localStorage.$default($scope.getDefault());
                 $scope.addIdea = function(color) {
                     var ideastring = $scope.$storage[color].toString();
                     var idea = new Object();
@@ -155,7 +158,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 };
                 
                 $scope.restore = function(){
-                    $scope.$storage = $scope.$storage.$reset(defaultStorage);
+                    $scope.$storage.$reset($scope.getDefault());
                 };
                 
                 $scope.checkIdea = function(text){
@@ -226,7 +229,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             
             app.directive('restore',function(){
                 return {
-                    template: '<button ng-click="restore()" type="button" class="btn btn-danger">Verwijder alle data</button>'
+                    template: '<button ng-click="restore()" type="button" class="btn btn-danger" data-dismiss="modal">Verwijder alle data</button>'
                 };
             });
             

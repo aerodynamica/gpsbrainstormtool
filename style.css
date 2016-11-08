@@ -26,12 +26,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 body{
     background: rgba(46,30,28,0.1);
-background: -moz-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0) 50%, rgba(0,0,0,0.1) 100%);
-background: -webkit-gradient(left top, right top, color-stop(0%, rgba(46,30,28,0.1)), color-stop(50%, rgba(23,15,14,0)), color-stop(100%, rgba(0,0,0,0.1)));
-background: -webkit-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0) 50%, rgba(0,0,0,0.1) 100%);
-background: -o-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0) 50%, rgba(0,0,0,0.1) 100%);
-background: -ms-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0) 50%, rgba(0,0,0,0.1) 100%);
-background: linear-gradient(to right, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0) 50%, rgba(0,0,0,0.1) 100%)!important;
+background: -moz-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0.05) 50%, rgba(0,0,0,0.1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(46,30,28,0.1)), color-stop(50%, rgba(23,15,14,0.05)), color-stop(100%, rgba(0,0,0,0.1)));
+background: -webkit-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0.05) 50%, rgba(0,0,0,0.1) 100%);
+background: -o-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0.05) 50%, rgba(0,0,0,0.1) 100%);
+background: -ms-linear-gradient(left, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0.05) 50%, rgba(0,0,0,0.1) 100%);
+background: linear-gradient(to right, rgba(46,30,28,0.1) 0%, rgba(23,15,14,0.05) 50%, rgba(0,0,0,0.1) 100%)!important;
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2e1e1c', endColorstr='#000000', GradientType=1 );
 }
 
@@ -104,7 +104,7 @@ input[type=text]:not(:focus) + span{
 }
 
 *.subtle{
-    opacity:0.1;
+    opacity:0.5;
 }
 
 *.subtle:hover{
